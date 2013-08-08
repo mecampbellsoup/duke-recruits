@@ -12,4 +12,4 @@ Company.create name: "Deutsche Bank", description: "Global investment bank", web
 Company.create name: "Citigroup", description: "Global investment bank", website: "http://www.citigroup.com/citi/", image: "citi_logo.jpg"
 Company.create name: "Bank of America Merrill Lynch", description: "Global investment bank", website: "http://corp.bankofamerica.com/", image: "baml_logo.jpg"
 
-Event.create title: "" location: "" date: end_date:
+#Event.create title: "" location: "" date: end_date:
