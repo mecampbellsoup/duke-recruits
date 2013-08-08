@@ -32,8 +32,12 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+# Additions
 gem 'devise'
-
+gem "nifty-generators", :group => :development
+gem "twitter-bootstrap-rails"
+gem "therubyracer"
+gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
