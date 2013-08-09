@@ -1,0 +1,10 @@
+<%= render partial: 'layouts/sidebar' %>
+
+<section class="hero-unit">
+  <h1>Your place for keeping track of Duke recruiting events.</h1>
+
+  <div class='action-buttons'>
+    <%= link_to "Sign up as Duke student", new_user_registration_path, class: 'btn btn-success btn-large' %>
+    <%= link_to "Check out upcoming events", companies_path, class: 'btn btn-primary btn-large' %>
+  </div>
+</section>

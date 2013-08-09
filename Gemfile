@@ -34,10 +34,16 @@ end
 
 # Additions
 gem 'devise'
-gem "nifty-generators", :group => :development
 gem "twitter-bootstrap-rails"
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem 'pry-debugger'
+  gem "nifty-generators"
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

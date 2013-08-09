@@ -1,5 +1,6 @@
 DukeRecruits::Application.routes.draw do
 
+  get "events/index"
   devise_for :users
   root :to => "welcome#index"
   resources :companies, only: [:show, :index]
