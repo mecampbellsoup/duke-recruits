@@ -4,6 +4,7 @@ DukeRecruits::Application.routes.draw do
   devise_for :users
   root :to => "welcome#index"
   resources :companies, only: [:show, :index]
+  resources :events, only: [:index, :show]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
