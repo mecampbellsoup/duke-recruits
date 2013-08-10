@@ -6,7 +6,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="#">DukeRecruits</a>
+      <%= link_to "DukeRecruits", events_path, class: "brand" %>
       <div class="container-fluid nav-collapse">
         <ul class="nav">
           <% if user_signed_in? %>

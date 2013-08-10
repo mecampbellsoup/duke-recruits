@@ -1,11 +1,14 @@
 <h1>Check out the premier companies that recruit at Duke...</h1>
 <br>
 
-<div class="list-group">
-  <% @companies.each do |company| %>
-	  <ul class="nav nav-pills">
-			<li><%= link_to company.name, company_path(company) %></li>
-		</ul>
-  <% end %>
-</div>
-			
+<body>
+	<div class="row-fluid">
+		<div class="span9 list-group">
+		  <% @companies.each do |company| %>
+			  <ul class="well nav nav-pills">
+					<li><%= link_to company.name, company_path(company) %></li>
+				</ul>
+		  <% end %>
+		</div>
+	</div>
+</body>			

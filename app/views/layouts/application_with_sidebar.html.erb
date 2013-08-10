@@ -5,7 +5,8 @@
     <%= render partial: 'layouts/navbar' %>
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span12">
+      <%= render partial: 'layouts/sidebar' %>
+        <div class="span9">
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
@@ -16,7 +17,6 @@
           <%= mail_to "mecampbell25@gmail.com", "© DukeRecruits 2013" %>
         </p>
       </footer>
-
     </div> <!-- /container -->
 
     <!-- Javascripts

@@ -44,7 +44,6 @@ group :development do
   gem "binding_of_caller"
   gem 'pry-debugger'
   gem "nifty-generators"
-  gem "paperclip", "~> 3.0"
 end
 
 # Use ActiveModel has_secure_password
