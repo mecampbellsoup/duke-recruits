@@ -1,5 +1,4 @@
 <h1>Browse upcoming recruiting events at Duke</h1>
-
 <% if @events.empty? %>
   <p>There are not any events currently in the system.</p>
 <% end %>
@@ -35,3 +34,18 @@
 </table>
 
 <p><%= link_to 'Back', :back %></p>
+
+<div class="media">
+  <a class="pull-left" href="#">
+    <img class="media-object" data-src="holder.js/64x64">
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">Media heading</h4>
+    ...
+ 
+    <!-- Nested media object -->
+    <div class="media">
+      ...
+    </div>
+  </div>
+</div>
