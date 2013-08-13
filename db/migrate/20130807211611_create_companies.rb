@@ -4,7 +4,7 @@ class CreateCompanies < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.string :website
-      t.string :image
+      t.string :logo
 
       t.timestamps
     end

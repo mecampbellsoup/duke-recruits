@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20130808164206) do
     t.string   "name"
     t.string   "description"
     t.string   "website"
-    t.string   "image"
+    t.string   "logo"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
