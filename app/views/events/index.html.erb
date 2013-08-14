@@ -1,51 +1,19 @@
 <h1>Browse upcoming recruiting events at Duke</h1>
+<p><%= link_to "Table view?", events_path(table: true) %></p>
+
 <% if @events.empty? %>
   <p>There are not any events currently in the system.</p>
 <% end %>
+<br/>
 
-<% @events.each do |event| %>
-	<article>
-	  <li>
-		  <header>
-		    <%= link_to event.title, event_path(event) %>
-		  </header>
-	  	<%# image_tag @company.image %>
-	  </li>
-	</article>
-<% end %>
 
-<table>
-	<tr>
-		<th><%= Event.column_names.second.capitalize %></th>
-		<th><%= Event.column_names.third.capitalize %></th>
-		<th><%= Event.column_names.fourth.capitalize %></th>
-		<th><%= Event.column_names[5].capitalize %></th>
-
-	</tr>
-
-<% @events.each do |event| %>
-	<tr>
-		<td><%= link_to event.title, event_path(event) %></td>
-		<td><%= event.location %></td>
-		<td><%= event.date %></td>
-		<td><%= event.company_id %></td>
-	</tr>
-<% end %>
-</table>
-
-<p><%= link_to 'Back', :back %></p>
-
-<div class="media">
-  <a class="pull-left" href="#">
-    <img class="media-object" data-src="holder.js/64x64">
-  </a>
-  <div class="media-body">
-    <h4 class="media-heading">Media heading</h4>
-    ...
- 
-    <!-- Nested media object -->
-    <div class="media">
-      ...
-    </div>
-  </div>
+<div>
+	<% @events.each do |event| %>
+		<div class="box">
+			<%= link_to image_tag(Company.find(event.company_id).logo, size: "125"), event_path(event)%>
+		</div>
+	<% end %>
 </div>
+
+
+<p style="clear:both">Don't see your event here?</p>

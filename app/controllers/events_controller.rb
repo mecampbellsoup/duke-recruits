@@ -6,15 +6,23 @@ class EventsController < ApplicationController
     @events = Event.all
     @companies = @events.collect do |event|
       Company.find(event.company_id)
+      end
+    if params[:table]
+      render :index_table
+    else
+      render :index
     end
-    #@company = @companies.find(params[:id])  ...some action to get a single company
   end
 
   def new
     @event = Event.new(event_params)
   end
 
+  def create  #create in this context will add event to user's calendar
+  end
+
   def show
+    @event = Event.find(params[:id])
   end
 
   private
