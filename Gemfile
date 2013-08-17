@@ -35,12 +35,15 @@ group :doc do
 end
 
 # Additions
-gem 'devise'
 gem "twitter-bootstrap-rails"
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'protected_attributes'
-gem "omniauth-google-oauth2"
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+gem 'omniauth-linkedin-oauth2'
+gem 'linkedin'
+gem 'devise'
 
 group :development do
   gem "better_errors"

@@ -80,6 +80,10 @@ GEM
       actionpack (>= 3.1)
       less (~> 2.3.1)
     libv8 (3.11.8.17)
+    linkedin (0.4.2)
+      hashie (>= 1.2, < 2.1)
+      multi_json (~> 1.0)
+      oauth (~> 0.4)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -89,6 +93,7 @@ GEM
     multi_json (1.7.8)
     multipart-post (1.2.0)
     nifty-generators (0.4.6)
+    oauth (0.4.7)
     oauth2 (0.8.1)
       faraday (~> 0.8)
       httpauth (~> 0.1)
@@ -98,7 +103,12 @@ GEM
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
+    omniauth-facebook (1.4.1)
+      omniauth-oauth2 (~> 1.1.0)
     omniauth-google-oauth2 (0.2.0)
+      omniauth (~> 1.0)
+      omniauth-oauth2
+    omniauth-linkedin-oauth2 (0.1.1)
       omniauth (~> 1.0)
       omniauth-oauth2
     omniauth-oauth2 (1.1.1)
@@ -195,8 +205,11 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   less-rails
+  linkedin
   nifty-generators
+  omniauth-facebook
   omniauth-google-oauth2
+  omniauth-linkedin-oauth2
   pg
   protected_attributes
   pry-debugger

@@ -4,6 +4,107 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+  devise :omniauthable, :omniauth_providers => [:google_oauth2, :facebook, :linkedin]
   has_many :events
+  has_many :authorizations, dependent: :destroy
   has_many :companies, through: :events
+
+  # def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+  #   data = access_token.info
+  #   user = User.where(:email => data["email"]).first
+  #   unless user
+  #     user = User.create(name: data["name"], email: data["email"], password: Devise.friendly_token[0,20])
+  #   end
+  #   user
+  # end
+
+  # def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
+  #   user = User.where(:provider => access_token.provider, :uid => access_token.uid).first
+  #   unless user
+  #     user = User.create(name:access_token.extra.raw_info.name, provider:access_token.provider, uid:access_token.uid, email:access_token.info.email, password:Devise.friendly_token[0,20])
+  #   end
+  #   user
+  # end
+
+  # def self.find_for_linkedin_oauth(access_token, signed_in_resource=nil)
+  #   user = User.where(:provider => access_token.provider, :uid => access_token.uid).first
+  #   unless user
+  #     user = User.create(name:access_token.extra.raw_info.name, provider:access_token.provider, uid:access_token.uid, email:access_token.info.email, password:Devise.friendly_token[0,20])
+  #   end
+  #   user
+  # end
+
+  def self.find_for_ouath(provider, access_token, resource=nil)
+    user, email, name, uid, auth_attr = nil, nil, nil, {}
+    case provider
+    when "Facebook"
+      binding.pry
+      uid = access_token['uid']
+      email = access_token['extra']['user_hash']['email']
+      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => access_token['extra']['user_hash']['name'], :link => access_token['extra']['user_hash']['link'] }
+    when 'LinkedIn'
+      binding.pry
+      uid = access_token['uid']
+      name = access_token['user_info']['name']
+      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => access_token['credentials']['secret'], :name => name, :link => access_token['user_info']['public_profile_url'] }
+    when 'Google'
+      binding.pry
+      uid = access_token['uid']
+      email = access_token['info']['email']
+      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => access_token['info']['name'], :link => access_token['extra']['raw_info']['link'] }
+    else 
+      raise 'Provider #{provider} not handled'
+    end
+    if resource.nil?
+      if email
+        user = find_for_oauth_by_email(email, resource)
+      elsif uid && name
+        user = find_for_oauth_by_uid(uid, resource)
+        if user.nil?
+          user = find_for_oauth_by_name(name, resource)
+        end
+      end
+    else
+      user = resource
+    end
+    
+    auth = user.authorizations.find_by_provider(provider)
+    if auth.nil?
+      auth = user.authorizations.build(:provider => provider)
+      user.authorizations << auth
+    end
+    auth.update_attributes auth_attr
+  
+    return user
+  end
+ 
+  def find_for_oauth_by_uid(uid, resource=nil)
+    user = nil
+    if auth = Authorization.find_by_uid(uid.to_s)
+      user = auth.user
+    end
+    return user
+  end
+   
+  def find_for_oauth_by_email(email, resource=nil)
+    if user = User.find_by_email(email)
+      user
+    else
+      user = User.new(:email => email, :password => Devise.friendly_token[0,20]) 
+      user.save
+    end
+    return user
+  end
+    
+  def find_for_oauth_by_name(name, resource=nil)
+    if user = User.find_by_name(name)
+      user
+    else
+      user = User.new(:name => name, :password => Devise.friendly_token[0,20], :email => "#{UUIDTools::UUID.random_create}@host")
+      user.save false
+    end
+    return user
+  end   
+
 end
+ 

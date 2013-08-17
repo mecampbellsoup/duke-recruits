@@ -1,16 +1,15 @@
 <body class="home">
-<% 8.times do %>	
-	<br>
+<% 10.times do %>	
+	<br />
 <% end %>
 
 <section class="hero-unit pagination-centered">
-  <h1>Your place for keeping track of Duke recruiting events.</h1>
-  <br>
-
-  <div class='action-buttons'>
-    <%= link_to "Sign up as Duke student", new_user_registration_path, class: 'center btn btn-success btn-large' %>
-    <%= link_to "Check out upcoming events", events_path, class: 'center btn btn-primary btn-large' %>
-    <%= link_to "Companies that recruit", companies_path, class: 'center btn btn-info btn-large' %>
-  </div>
+  <h1 class="decorative">Your place for keeping track of Duke recruiting events.</h1>
 </section>
+
+<div class='action-buttons pagination-centered'>
+    <%= link_to "Sign up as Duke student", new_user_registration_path, class: 'btn btn-success btn-large' %>
+    <%= link_to "Check out upcoming events", events_path, class: 'btn btn-primary btn-large' %>
+    <%= link_to "Companies that recruit", companies_path, class: 'btn btn-info btn-large' %>
+  </div>
 </body>
