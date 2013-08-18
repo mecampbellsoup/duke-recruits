@@ -44,6 +44,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin-oauth2'
 gem 'linkedin'
 gem 'devise'
+gem 'awesome_print'
+gem "uuidtools"
 
 group :development do
   gem "better_errors"

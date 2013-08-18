@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, :omniauth_providers => [:google_oauth2, :facebook, :linkedin]
-  has_many :events
+  
+  has_many :events, :comments
   has_many :authorizations, dependent: :destroy
   has_many :companies, through: :events
 
@@ -38,28 +39,26 @@ class User < ActiveRecord::Base
     user, email, name, uid, auth_attr = nil, nil, nil, {}
     case provider
     when "Facebook"
-      binding.pry
       uid = access_token['uid']
-      email = access_token['extra']['user_hash']['email']
-      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => access_token['extra']['user_hash']['name'], :link => access_token['extra']['user_hash']['link'] }
+      email = access_token['extra']['raw_info']['email']
+      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => access_token['info']['name'], :link => access_token['extra']['raw_info']['link'] }
     when 'LinkedIn'
-      binding.pry
       uid = access_token['uid']
-      name = access_token['user_info']['name']
-      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => access_token['credentials']['secret'], :name => name, :link => access_token['user_info']['public_profile_url'] }
+      email = access_token['info']['email']
+      name = access_token['info']['name']
+      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => name, :link => access_token['info']['urls']['public_profile'] }
     when 'Google'
-      binding.pry
       uid = access_token['uid']
       email = access_token['info']['email']
       auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => access_token['info']['name'], :link => access_token['extra']['raw_info']['link'] }
     else 
       raise 'Provider #{provider} not handled'
     end
-    if resource.nil?
+    if resource.nil?  #resource checks for current_user in omniauth controller
       if email
-        user = find_for_oauth_by_email(email, resource)
+        user = User.find_for_oauth_by_email(email, resource)
       elsif uid && name
-        user = find_for_oauth_by_uid(uid, resource)
+        user = User.find_for_oauth_by_uid(uid, resource)
         if user.nil?
           user = find_for_oauth_by_name(name, resource)
         end
@@ -68,17 +67,16 @@ class User < ActiveRecord::Base
       user = resource
     end
     
-    auth = user.authorizations.find_by_provider(provider)
+    auth = user.authorizations.find_by_provider(provider) #rubymine traces dependencies?
     if auth.nil?
       auth = user.authorizations.build(:provider => provider)
       user.authorizations << auth
     end
     auth.update_attributes auth_attr
-  
     return user
   end
  
-  def find_for_oauth_by_uid(uid, resource=nil)
+  def self.find_for_oauth_by_uid(uid, resource=nil)
     user = nil
     if auth = Authorization.find_by_uid(uid.to_s)
       user = auth.user
@@ -86,7 +84,7 @@ class User < ActiveRecord::Base
     return user
   end
    
-  def find_for_oauth_by_email(email, resource=nil)
+  def self.find_for_oauth_by_email(email, resource=nil)
     if user = User.find_by_email(email)
       user
     else
@@ -96,7 +94,7 @@ class User < ActiveRecord::Base
     return user
   end
     
-  def find_for_oauth_by_name(name, resource=nil)
+  def self.find_for_oauth_by_name(name, resource=nil)
     if user = User.find_by_name(name)
       user
     else
