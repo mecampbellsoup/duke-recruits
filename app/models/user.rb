@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, :omniauth_providers => [:google_oauth2, :facebook, :linkedin]
-  
-  has_many :events, :comments
+  has_many :events
+  has_many :comments
   has_many :authorizations, dependent: :destroy
   has_many :companies, through: :events
 
