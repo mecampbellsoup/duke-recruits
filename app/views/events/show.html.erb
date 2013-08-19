@@ -1,8 +1,16 @@
-<h1><%= @event.title %></h1>
-<h3 class="subheader">Hosted by <%= @company.name %></h3>
-<div><%= image_tag @company.logo, size: "125" %></div>
+<div class="hero-unit">
+	<h1 class="lead"><%= @event.title %></h1>
+	<h3 class="lead">Hosted by <%= @company.name %></h3>
+	<h4 class="lead text-warning"><%= @event.location %></h4>
+	<div><%= image_tag @company.logo, size: "125" %></div>
+	<br/>
+	<p>Learn more: <%= link_to @company.website, @company.website %></p>
+</div>
+
+<ul class="nav nav-list">
+  <li class="divider"></li>
+</ul>
 <br/>
-<p>Learn more: <%= link_to @company.website, @company.website %></p>
 
 <%= form_for [@event, @comment] do |f| %>
   <p>
@@ -13,7 +21,6 @@
 
 <ul class="comments">
   <% @event.comments.each do |comment| %>
-  	<%# binding.pry %>
     <li><%= "#{comment.user.name} posted: #{comment.post}" %></li>
   <% end %>
 </ul>
