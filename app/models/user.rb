@@ -50,13 +50,14 @@ class User < ActiveRecord::Base
     when 'Google'
       uid = access_token['uid']
       email = access_token['info']['email']
-      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => access_token['info']['name'], :link => access_token['extra']['raw_info']['link'] }
+      name = access_token['info']['name']
+      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => name, :link => access_token['extra']['raw_info']['link'] }
     else 
       raise 'Provider #{provider} not handled'
     end
     if resource.nil?  #resource checks for current_user in omniauth controller
-      if email
-        user = User.find_for_oauth_by_email(email, resource)
+      if email && name
+        user = User.find_for_oauth_by_email(email, name, resource)
       elsif uid && name
         user = User.find_for_oauth_by_uid(uid, resource)
         if user.nil?
@@ -80,16 +81,18 @@ class User < ActiveRecord::Base
     user = nil
     if auth = Authorization.find_by_uid(uid.to_s)
       user = auth.user
+      binding.pry
     end
     return user
   end
    
-  def self.find_for_oauth_by_email(email, resource=nil)
+  def self.find_for_oauth_by_email(email, name, resource=nil)
     if user = User.find_by_email(email)
       user
     else
-      user = User.new(:email => email, :password => Devise.friendly_token[0,20]) 
+      user = User.new(email: email, name: name, password: Devise.friendly_token[0,20]) 
       user.save
+      binding.pry
     end
     return user
   end
@@ -100,6 +103,7 @@ class User < ActiveRecord::Base
     else
       user = User.new(:name => name, :password => Devise.friendly_token[0,20], :email => "#{UUIDTools::UUID.random_create}@host")
       user.save false
+      binding.pry
     end
     return user
   end   

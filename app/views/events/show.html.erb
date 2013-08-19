@@ -1,6 +1,8 @@
 <h1><%= @event.title %></h1>
-<p><%= link_to @event.link, @event.link %>
-<p><%= link_to "Back to home page", root_path %></p>
+<h3 class="subheader">Hosted by <%= @company.name %></h3>
+<div><%= image_tag @company.logo, size: "125" %></div>
+<br/>
+<p>Learn more: <%= link_to @company.website, @company.website %></p>
 
 <%= form_for [@event, @comment] do |f| %>
   <p>
@@ -11,6 +13,11 @@
 
 <ul class="comments">
   <% @event.comments.each do |comment| %>
-    <li><%= "#{comment.user.try(:email)} posted: #{comment.post}" %></li>
+  	<%# binding.pry %>
+    <li><%= "#{comment.user.name} posted: #{comment.post}" %></li>
   <% end %>
 </ul>
+
+<br/>
+<p><%= link_to "Back to home page", root_path %></p>
+

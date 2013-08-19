@@ -1,11 +1,14 @@
 DukeRecruits::Application.routes.draw do
+  get "comments/create"
   root :to => "welcome#index"
 
   #devise_for :users
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "registrations" }
   
   resources :companies, only: [:show, :index]
-  resources :events, only: [:index, :show]
+  resources :events, only: [:index, :show] do
+    resources :comments, only: :create
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

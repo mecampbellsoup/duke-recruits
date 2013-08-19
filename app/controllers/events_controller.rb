@@ -23,6 +23,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @company = Company.find(@event)
+    @comment = Comment.new(:event => @event)
   end
 
   private
