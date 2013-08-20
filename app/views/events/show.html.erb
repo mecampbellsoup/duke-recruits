@@ -23,7 +23,7 @@
   <% @comments.each do |comment| %>
     <li>
       <%# I think I need to pass the comment itself thru params to the comments#upvote action %>
-      <%= link_to image_tag("https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-512.png", size: "16"), upvote_path(params[:id]) %>
+      <%= link_to image_tag("https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-512.png", size: "16"), upvote_path(comment) %>
       <%= "(#{comment.upvotes} upvotes)" %> |  
       <%= "#{comment.user.name} posted on #{comment.created_at.strftime("%m-%d-%y")}: #{comment.post}" %>
       <%#, upvote_path(comment) %>
