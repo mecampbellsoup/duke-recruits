@@ -1,5 +1,6 @@
 <div class="hero-unit">
-	<h1 class="lead"><%= @event.title %></h1>
+	<p><%= link_to "Back to home page", root_path %></p>
+  <h1 class="lead"><%= @event.title %></h1>
 	<h3 class="lead">Hosted by <%= @company.name %></h3>
   <div><%= image_tag @company.logo, size: "125" %></div>
   <br/>
@@ -20,17 +21,13 @@
 <% end %>
 
 <ul class="comments">
-  <% @comments.each do |comment| %>
+  <% @comments.reverse.each do |comment| %>
     <li>
       <%# I think I need to pass the comment itself thru params to the comments#upvote action %>
-      <%= link_to image_tag("https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-512.png", size: "16"), upvote_path(comment) %>
+      <%= link_to image_tag("https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-512.png", size: "16"), upvote_path(comment: comment.id, event: @event.id) %>
       <%= "(#{comment.upvotes} upvotes)" %> |  
       <%= "#{comment.user.name} posted on #{comment.created_at.strftime("%m-%d-%y")}: #{comment.post}" %>
       <%#, upvote_path(comment) %>
     </li>
   <% end %>
 </ul>
-
-<br/>
-<p><%= link_to "Back to home page", root_path %></p>
-

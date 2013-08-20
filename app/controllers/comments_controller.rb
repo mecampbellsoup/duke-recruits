@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
+  layout 'application_with_sidebar'
+
   def create
     if user_signed_in?
       @event = Event.find(params[:event_id])
@@ -20,9 +23,14 @@ class CommentsController < ApplicationController
   end
 
   def upvote
-    Comment.increment_counter(:upvotes, params[:id])
-    redirect_to event_path(params[:id])
-    binding.pry
+    #params = {"comment"=>"28", "event"=>"3", "controller"=>"comments", "action"=>"upvote", "id"=>"3"}
+
+    if Comment.increment_counter(:upvotes, params[:comment])
+      redirect_to event_path(params[:event])
+    else
+      flash[:error] = "Your comment could not be posted :("
+      redirect_to @comment.event
+    end
   end
 
   private
