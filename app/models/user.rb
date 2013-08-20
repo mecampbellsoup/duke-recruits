@@ -81,7 +81,6 @@ class User < ActiveRecord::Base
     user = nil
     if auth = Authorization.find_by_uid(uid.to_s)
       user = auth.user
-      binding.pry
     end
     return user
   end
@@ -92,7 +91,6 @@ class User < ActiveRecord::Base
     else
       user = User.new(email: email, name: name, password: Devise.friendly_token[0,20]) 
       user.save
-      binding.pry
     end
     return user
   end

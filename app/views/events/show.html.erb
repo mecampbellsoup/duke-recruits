@@ -1,5 +1,5 @@
 <div class="hero-unit">
-	<p><%= link_to "Back to events", events_path %></p>
+	<p><%= link_to "Back to events", events_path %> | <%= link_to "Export to iCal", ical_export_path(params[:id]) %></p>
   <h1 class="lead"><%= @event.title %></h1>
 	<h3 class="lead">Hosted by <%= @company.name %></h3>
   <div><%= image_tag @company.logo, size: "125" %></div>

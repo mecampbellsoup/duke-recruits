@@ -9,8 +9,10 @@ DukeRecruits::Application.routes.draw do
   resources :events, only: [:index, :show] do
     resources :comments, only: :create
   end
+  
+  get "events/:id/export", to: "events#export", as: :ical_export
+  get "events/:id/upvote", to: "comments#upvote", as: :upvote
 
-  get "events/:id/upvote", to: "comments#upvote", as: :upvote 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

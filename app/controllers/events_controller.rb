@@ -1,3 +1,5 @@
+require 'icalendar'
+
 class EventsController < ApplicationController
   before_action :authenticate_user!
   layout 'application_with_sidebar'
@@ -18,7 +20,20 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
   end
 
-  def create  #create in this context will add event to user's calendar
+  def export
+    @event = Event.find(params[:id])
+    @calendar = Icalendar::Calendar.new
+    event = Icalendar::Event.new
+    event.start = @event.date.strftime("%Y%m%dT%H%M%S")
+    event.end = @event.end_date.strftime("%Y%m%dT%H%M%S")
+    event.summary = @event.title
+    event.description = @event.description
+    event.location = @event.location
+    @calendar.add event
+    @calendar.publish
+    headers['Content-Type'] = "text/calendar; charset=UTF-8"
+    render :text => @calendar.to_ical
+    #redirect_to event_path(params[:id])
   end
 
   def show

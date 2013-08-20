@@ -4,10 +4,6 @@ ruby '2.0.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
-# Use sqlite3 as the database for Active Record
-gem 'pg'
-gem 'rails_12factor', group: :production
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
@@ -28,13 +24,20 @@ gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
+gem 'awesome_print'
+gem 'simple_form'
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
 
-# Additions
+group :production do
+  gem 'pg'
+  gem 'rails_12factor', group: :production
+end
+
 gem "twitter-bootstrap-rails"
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
@@ -44,9 +47,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin-oauth2'
 gem 'linkedin'
 gem 'devise'
-gem 'awesome_print'
 gem 'uuidtools'
-gem 'simple_form'
+gem 'icalendar'
 
 group :development do
   gem "better_errors"
