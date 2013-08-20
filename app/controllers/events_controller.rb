@@ -24,6 +24,7 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @company = @event.company
+    @comments = @event.comments
     @comment = Comment.new(:event => @event)
   end
 

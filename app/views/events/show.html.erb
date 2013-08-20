@@ -1,9 +1,9 @@
 <div class="hero-unit">
 	<h1 class="lead"><%= @event.title %></h1>
 	<h3 class="lead">Hosted by <%= @company.name %></h3>
-	<h4 class="lead text-warning"><%= @event.location %></h4>
-	<div><%= image_tag @company.logo, size: "125" %></div>
-	<br/>
+  <div><%= image_tag @company.logo, size: "125" %></div>
+  <br/>
+	<h4 class="lead text-warning"><%= @event.date.strftime("%m-%d-%Y") %> @ <%= @event.location %> from <%= @event.date.strftime("%-1I:%M") %>-<%= @event.end_date.strftime("%-1I:%M %P") %></h4>
 	<p>Learn more: <%= link_to @company.website, @company.website %></p>
 </div>
 
@@ -12,16 +12,22 @@
 </ul>
 <br/>
 
-<%= form_for [@event, @comment] do |f| %>
-  <p>
-    <%= f.text_area :post, placeholder: "Add a comment..." %>
-  </p>
-  <%= f.submit %>
+<%= simple_form_for [@event, @comment] do |f| %>
+  <div class="well">
+    <%= f.text_area :post, placeholder: "Leave a note here about the #{@event.title}" %>
+    <%= f.button :submit, class: "btn btn-success" %>
+  </div>
 <% end %>
 
 <ul class="comments">
-  <% @event.comments.each do |comment| %>
-    <li><%= "#{comment.user.name} posted: #{comment.post}" %></li>
+  <% @comments.each do |comment| %>
+    <li>
+      <%# I think I need to pass the comment itself thru params to the comments#upvote action %>
+      <%= link_to image_tag("https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-512.png", size: "16"), upvote_path(params[:id]) %>
+      <%= "(#{comment.upvotes} upvotes)" %> |  
+      <%= "#{comment.user.name} posted on #{comment.created_at.strftime("%m-%d-%y")}: #{comment.post}" %>
+      <%#, upvote_path(comment) %>
+    </li>
   <% end %>
 </ul>
 

@@ -46,6 +46,7 @@ gem 'linkedin'
 gem 'devise'
 gem 'awesome_print'
 gem 'uuidtools'
+gem 'simple_form'
 
 group :development do
   gem "better_errors"

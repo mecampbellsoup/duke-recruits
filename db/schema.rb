@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130818220316) do
+ActiveRecord::Schema.define(version: 20130819190704) do
 
   create_table "authorizations", force: true do |t|
     t.string   "provider"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20130818220316) do
     t.text     "post"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "upvotes"
   end
 
   add_index "comments", ["event_id"], name: "index_comments_on_event_id"
