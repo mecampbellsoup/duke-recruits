@@ -13,6 +13,10 @@ DukeRecruits::Application.routes.draw do
   get "events/:id/export", to: "events#export", as: :ical_export
   get "events/:id/upvote", to: "comments#upvote", as: :upvote
 
+  devise_scope :user do
+    get "users/:id", :to => "users#show", as: :user_profile
+  end
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

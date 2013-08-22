@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   devise :omniauthable, :omniauth_providers => [:google_oauth2, :facebook, :linkedin]
   has_many :events
   has_many :comments
-  has_many :authorizations, dependent: :destroy
+  has_many :authentications, dependent: :destroy
   has_many :companies, through: :events
 
   # def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   # end
 
   def self.find_for_ouath(provider, access_token, resource=nil)
+    binding.pry    
     user, email, name, uid, auth_attr = nil, nil, nil, {}
     case provider
     when "Facebook"
@@ -48,6 +49,7 @@ class User < ActiveRecord::Base
       name = access_token['info']['name']
       auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => name, :link => access_token['info']['urls']['public_profile'] }
     when 'Google'
+      binding.pry
       uid = access_token['uid']
       email = access_token['info']['email']
       name = access_token['info']['name']
@@ -68,10 +70,10 @@ class User < ActiveRecord::Base
       user = resource
     end
     
-    auth = user.authorizations.find_by_provider(provider) #rubymine traces dependencies?
+    auth = user.authentications.find_by_provider(provider) #rubymine traces dependencies?
     if auth.nil?
-      auth = user.authorizations.build(:provider => provider)
-      user.authorizations << auth
+      auth = user.authentications.build(:provider => provider)
+      user.authentications << auth
     end
     auth.update_attributes auth_attr
     return user
@@ -79,7 +81,7 @@ class User < ActiveRecord::Base
  
   def self.find_for_oauth_by_uid(uid, resource=nil)
     user = nil
-    if auth = Authorization.find_by_uid(uid.to_s)
+    if auth = Authentication.find_by_uid(uid.to_s)
       user = auth.user
     end
     return user

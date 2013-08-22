@@ -1,4 +1,10 @@
 class RegistrationsController < Devise::RegistrationsController
+
+  # GET /resource/sign_up
+  def new
+    build_resource({})
+    respond_with self.resource
+  end
  
   def update
     if params[resource_name][:password].blank?
