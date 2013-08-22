@@ -49,7 +49,7 @@ gem 'linkedin'
 gem 'devise'
 gem 'uuidtools'
 gem 'icalendar'
-gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+gem 'activerecord-session_store', github: 'mecampbellsoup/activerecord-session_store'
 
 gem 'rest-client'
 
