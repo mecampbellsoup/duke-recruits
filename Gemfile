@@ -3,6 +3,7 @@ ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -34,8 +35,7 @@ group :doc do
 end
 
 group :production do
-  gem 'pg'
-  gem 'rails_12factor', group: :production
+  gem 'rails_12factor'
 end
 
 gem "twitter-bootstrap-rails"
@@ -57,7 +57,6 @@ group :development do
   gem "binding_of_caller"
   gem 'pry-debugger'
   gem "nifty-generators"
-  gem 'sqlite3'
 end
 
 # Use ActiveModel has_secure_password
