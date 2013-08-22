@@ -18,7 +18,11 @@
 						<% @user.authentications.each do |auth| %></td>
 							<% auth_array << auth.provider.capitalize %>
 						<% end %>
-						<td><%= auth_array.join(", ") %></td>
+						<% if auth_array.empty? %>
+							<td>None yet... link them <%= link_to "here!", edit_user_registration_path %></td>
+						<% else %>
+							<td><%= auth_array.join(", ") %></td>
+						<% end %>
 					</tr>
 				</tbody>
 			</table>

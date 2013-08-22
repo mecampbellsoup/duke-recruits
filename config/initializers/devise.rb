@@ -6,7 +6,7 @@ Devise.setup do |config|
   require 'omniauth-linkedin-oauth2'
   require 'linkedin'
 
-  config.omniauth :google_oauth2, ENV['GOOGLE_ID'], ENV['GOOGLE_SECRET'], { access_type: 'offline' }
+  config.omniauth :google_oauth2, ENV['GOOGLE_ID'], ENV['GOOGLE_SECRET'], { scope: 'userinfo.email, userinfo.profile, https://www.google.com/m8/feeds', access_type: 'offline', client_options: {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}} }
   config.omniauth :facebook, ENV['FACEBOOK_ID'], ENV['FACEBOOK_SECRET']
   config.omniauth :linked_in, ENV['LINKEDIN_API_KEY'], ENV['LINKEDIN_SECRET_KEY']
   # ==> Mailer Configuration
