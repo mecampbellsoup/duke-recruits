@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
   # end
 
   def self.find_for_ouath(provider, access_token, resource=nil)
-    binding.pry    
     user, email, name, uid, auth_attr = nil, nil, nil, {}
     case provider
     when "Facebook"
@@ -49,7 +48,6 @@ class User < ActiveRecord::Base
       name = access_token['info']['name']
       auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => name, :link => access_token['info']['urls']['public_profile'] }
     when 'Google'
-      binding.pry
       uid = access_token['uid']
       email = access_token['info']['email']
       name = access_token['info']['name']
