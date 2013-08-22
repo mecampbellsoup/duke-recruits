@@ -2,8 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    build_resource({})
-    respond_with self.resource
+    super
   end
  
   def update
