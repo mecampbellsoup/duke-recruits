@@ -3,7 +3,7 @@ DukeRecruits::Application.routes.draw do
   root :to => "welcome#index"
 
   #devise_for :users
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "registrations" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   
   resources :companies, only: [:show, :index]
   resources :events, only: [:index, :show] do
