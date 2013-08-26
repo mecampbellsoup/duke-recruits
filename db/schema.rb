@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20130822214026) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "authentications", force: true do |t|
     t.string   "provider"
     t.string   "uid"
@@ -37,8 +34,8 @@ ActiveRecord::Schema.define(version: 20130822214026) do
     t.integer  "upvotes"
   end
 
-  add_index "comments", ["event_id"], name: "index_comments_on_event_id", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+  add_index "comments", ["event_id"], name: "index_comments_on_event_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "companies", force: true do |t|
     t.string   "name"
@@ -67,8 +64,8 @@ ActiveRecord::Schema.define(version: 20130822214026) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -88,7 +85,7 @@ ActiveRecord::Schema.define(version: 20130822214026) do
     t.string   "uid"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
