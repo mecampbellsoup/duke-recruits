@@ -10,31 +10,6 @@ class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
   has_many :companies, through: :events
 
-  # def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-  #   data = access_token.info
-  #   user = User.where(:email => data["email"]).first
-  #   unless user
-  #     user = User.create(name: data["name"], email: data["email"], password: Devise.friendly_token[0,20])
-  #   end
-  #   user
-  # end
-
-  # def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
-  #   user = User.where(:provider => access_token.provider, :uid => access_token.uid).first
-  #   unless user
-  #     user = User.create(name:access_token.extra.raw_info.name, provider:access_token.provider, uid:access_token.uid, email:access_token.info.email, password:Devise.friendly_token[0,20])
-  #   end
-  #   user
-  # end
-
-  # def self.find_for_linkedin_oauth(access_token, signed_in_resource=nil)
-  #   user = User.where(:provider => access_token.provider, :uid => access_token.uid).first
-  #   unless user
-  #     user = User.create(name:access_token.extra.raw_info.name, provider:access_token.provider, uid:access_token.uid, email:access_token.info.email, password:Devise.friendly_token[0,20])
-  #   end
-  #   user
-  # end
-
   def self.find_for_ouath(provider, access_token, resource=nil)
     user, email, name, uid, auth_attr = nil, nil, nil, {}
     case provider
@@ -42,43 +17,54 @@ class User < ActiveRecord::Base
       uid = access_token['uid']
       email = access_token['extra']['raw_info']['email']
       auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => access_token['info']['name'], :link => access_token['extra']['raw_info']['link'] }
+      binding.pry
     when 'LinkedIn'
       uid = access_token['uid']
       email = access_token['info']['email']
       name = access_token['info']['name']
       auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => name, :link => access_token['info']['urls']['public_profile'] }
+      binding.pry
     when 'Google'
       uid = access_token['uid']
       email = access_token['info']['email']
       name = access_token['info']['name']
       auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => name, :link => access_token['extra']['raw_info']['link'] }
+      binding.pry
     else 
       raise 'Provider #{provider} not handled'
     end
     if resource.nil?  #resource checks for current_user in omniauth controller
+      binding.pry
       if email
         user = User.find_for_oauth_by_email(email, name, resource)
+        binding.pry
       elsif uid && name
         user = User.find_for_oauth_by_uid(uid, resource)
+        binding.pry
         if user.nil?
           user = find_for_oauth_by_name(name, resource)
+          binding.pry
         end
       end
     else
+      binding.pry
       user = resource
     end
     
     auth = user.authentications.find_by_provider(provider) #rubymine traces dependencies?
     if auth.nil?
+      binding.pry
       auth = user.authentications.build(:provider => provider)
       user.authentications << auth
     end
     auth.update_attributes auth_attr
+    binding.pry
     return user
   end
  
   def self.find_for_oauth_by_uid(uid, resource=nil)
     user = nil
+    binding.pry
     if auth = Authentication.find_by_uid(uid.to_s)
       user = auth.user
     end
@@ -86,6 +72,7 @@ class User < ActiveRecord::Base
   end
    
   def self.find_for_oauth_by_email(email, name, resource=nil)
+    binding.pry
     if user = User.find_by_email(email)
       user
     else
@@ -97,8 +84,10 @@ class User < ActiveRecord::Base
     
   def self.find_for_oauth_by_name(name, resource=nil)
     if user = User.find_by_name(name)
+      binding.pry
       user
     else
+      binding.pry
       user = User.new(:name => name, :password => Devise.friendly_token[0,20], :email => "#{UUIDTools::UUID.random_create}@host")
       user.save false
       binding.pry

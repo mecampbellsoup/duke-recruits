@@ -21,7 +21,7 @@
 						<% if auth_array.empty? %>
 							<td>None yet... link them <%= link_to "here!", edit_user_registration_path %></td>
 						<% else %>
-							<td><%= auth_array.join(", ") %></td>
+							<td><%= auth_array.join(", ") %> - <%= link_to "link another account!", edit_user_registration_path %></td>
 						<% end %>
 					</tr>
 				</tbody>

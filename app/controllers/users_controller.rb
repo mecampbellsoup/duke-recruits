@@ -1,5 +1,5 @@
 class UsersController < Devise::SessionsController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: :show
   layout 'application'
 
   def show
