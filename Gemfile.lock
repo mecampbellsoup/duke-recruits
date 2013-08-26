@@ -1,12 +1,3 @@
-GIT
-  remote: git://github.com/mecampbellsoup/activerecord-session_store.git
-  revision: 42e8200abbe157e1b6fd262cd3a20a8e5b45cb5a
-  specs:
-    activerecord-session_store (0.0.1)
-      actionpack (>= 4.0.0.beta, < 5)
-      activerecord (>= 4.0.0.beta, < 5)
-      railties (>= 4.0.0.beta, < 5)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -213,7 +204,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-session_store!
   awesome_print
   better_errors
   binding_of_caller
