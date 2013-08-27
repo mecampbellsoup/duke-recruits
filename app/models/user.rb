@@ -56,10 +56,8 @@ class User < ActiveRecord::Base
   def self.find_for_oauth_by_uid(uid, resource=nil)
     user = nil
     if auth = Authentication.find_by_uid(uid.to_s)
-      binding.pry
       user = auth.user
     else
-      binding.pry
       user = User.new(email: email, name: name, password: Devise.friendly_token[0,20]) 
       user.save
     end
@@ -68,10 +66,8 @@ class User < ActiveRecord::Base
    
   def self.find_for_oauth_by_email(email, name, resource=nil)
     if user = User.find_by_email(email)
-      binding.pry
       user
     else
-      binding.pry
       user = User.new(email: email, name: name, password: Devise.friendly_token[0,20]) 
       user.save
     end
@@ -79,7 +75,6 @@ class User < ActiveRecord::Base
   end
     
   def self.find_for_oauth_by_name(name, resource=nil)
-    binding.pry
     if user = User.find_by_name(name)
       user
     else
