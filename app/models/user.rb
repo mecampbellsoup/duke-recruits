@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
       raise 'Provider #{provider} not handled'
     end
     if resource.nil?  #resource checks for current_user in omniauth controller
-      
+      binding.pry
       if email
         user = User.find_for_oauth_by_email(email, name, resource)
       elsif uid && name
@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
         end
       end
     else
+      binding.pry
       user = resource
     end
     

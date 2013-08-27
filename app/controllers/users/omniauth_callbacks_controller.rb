@@ -16,10 +16,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def oauthorize(kind)
     @user = User.find_for_ouath(kind, request.env["omniauth.auth"], current_user)
+    binding.pry
     if @user.persisted?
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => kind
       sign_in_and_redirect @user, :event => :authentication
     else
+      binding.pry
       session["devise.#{kind.downcase}_data"] = request.env["omniauth.auth"]
       redirect_to new_user_registration_url 
     end
