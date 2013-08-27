@@ -74,8 +74,6 @@ ActiveRecord::Schema.define(version: 20130822175104) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "provider"
-    t.string   "uid"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true

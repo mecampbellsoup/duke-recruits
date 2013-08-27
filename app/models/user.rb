@@ -16,7 +16,8 @@ class User < ActiveRecord::Base
     when "Facebook"
       uid = access_token['uid']
       email = access_token['extra']['raw_info']['email']
-      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => access_token['info']['name'], :link => access_token['extra']['raw_info']['link'] }
+      name = access_token['info']['name']
+      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => name, :link => access_token['extra']['raw_info']['link'] }
     when 'LinkedIn'
       uid = access_token['uid']
       email = access_token['info']['email']
@@ -31,7 +32,6 @@ class User < ActiveRecord::Base
       raise 'Provider #{provider} not handled'
     end
     if resource.nil?  #resource checks for current_user in omniauth controller
-      binding.pry
       if email
         user = User.find_for_oauth_by_email(email, name, resource)
       elsif uid && name
@@ -41,7 +41,6 @@ class User < ActiveRecord::Base
         end
       end
     else
-      binding.pry
       user = resource
     end
     
@@ -56,18 +55,23 @@ class User < ActiveRecord::Base
  
   def self.find_for_oauth_by_uid(uid, resource=nil)
     user = nil
-    
     if auth = Authentication.find_by_uid(uid.to_s)
+      binding.pry
       user = auth.user
+    else
+      binding.pry
+      user = User.new(email: email, name: name, password: Devise.friendly_token[0,20]) 
+      user.save
     end
     return user
   end
    
   def self.find_for_oauth_by_email(email, name, resource=nil)
-    
     if user = User.find_by_email(email)
+      binding.pry
       user
     else
+      binding.pry
       user = User.new(email: email, name: name, password: Devise.friendly_token[0,20]) 
       user.save
     end
@@ -75,6 +79,7 @@ class User < ActiveRecord::Base
   end
     
   def self.find_for_oauth_by_name(name, resource=nil)
+    binding.pry
     if user = User.find_by_name(name)
       user
     else
