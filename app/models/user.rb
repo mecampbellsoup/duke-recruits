@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :authentications, dependent: :destroy
   has_many :companies, through: :events
+  validates_presence_of :email
 
   def self.find_for_ouath(provider, access_token, resource=nil)
     user, email, name, uid, auth_attr = nil, nil, nil, {}

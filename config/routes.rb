@@ -14,7 +14,8 @@ DukeRecruits::Application.routes.draw do
   get "events/:id/upvote", to: "comments#upvote", as: :upvote
 
   devise_scope :user do
-    get "users/:id", :to => "users#show", as: :user_profile
+    get "users/:id", :to => "users#edit", as: :user_profile
+    patch "users/:id/update", :to => "users#update", as: :user
   end
 
 
