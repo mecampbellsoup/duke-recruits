@@ -4,11 +4,12 @@ Devise.setup do |config|
   require "omniauth-google-oauth2"
   require "omniauth-facebook"
   require 'omniauth-linkedin-oauth2'
-  require 'linkedin'
+  require 'omniauth-foursquare'
 
-  config.omniauth :google_oauth2, ENV['GOOGLE_ID'], ENV['GOOGLE_SECRET'], { scope: 'userinfo.email, userinfo.profile, https://www.google.com/m8/feeds', access_type: 'offline', client_options: {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}} }
+  config.omniauth :google_oauth2, ENV['GOOGLE_ID'], ENV['GOOGLE_SECRET'], { scope: 'userinfo.email, userinfo.profile, plus.me, http://gdata.youtube.com, https://www.google.com/m8/feeds', access_type: 'offline', client_options: {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}} }
   config.omniauth :facebook, ENV['FACEBOOK_ID'], ENV['FACEBOOK_SECRET']
   config.omniauth :linked_in, ENV['LINKEDIN_API_KEY'], ENV['LINKEDIN_SECRET_KEY']
+  config.omniauth :foursquare, ENV['FOURSQUARE_ID'], ENV['FOURSQUARE_SECRET']
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.

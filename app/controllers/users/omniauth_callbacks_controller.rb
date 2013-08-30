@@ -12,6 +12,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     oauthorize "LinkedIn"
   end
 
+  def foursquare
+    oauthorize "Foursquare"
+  end
+
   private
 
   def oauthorize(kind)

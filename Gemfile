@@ -44,7 +44,7 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin-oauth2'
-gem 'linkedin'
+gem 'omniauth-foursquare'
 gem 'devise'
 gem 'uuidtools'
 gem 'icalendar'

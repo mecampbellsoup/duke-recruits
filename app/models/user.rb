@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, :omniauth_providers => [:google_oauth2, :facebook, :linkedin]
+  devise :omniauthable, :omniauth_providers => [:google_oauth2, :facebook, :linkedin, :foursquare]
   has_many :events
   has_many :comments
   has_many :authentications, dependent: :destroy
@@ -29,7 +29,14 @@ class User < ActiveRecord::Base
       email = access_token['info']['email']
       name = access_token['info']['name']
       auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => name, :link => access_token['extra']['raw_info']['link'] }
-    else 
+    when 'Foursquare'
+      uid = access_token['uid']
+      email = access_token['info']['email']
+      first_name = access_token['info']['first_name']
+      last_name = access_token['info']['last_name']
+      name = first_name + " " + last_name
+      auth_attr = { :uid => uid, :token => access_token['credentials']['token'], :secret => nil, :name => name, :link => nil, :image => access_token['info']['image'] }
+    else
       raise 'Provider #{provider} not handled'
     end
     if resource.nil?  #resource checks for current_user in omniauth controller

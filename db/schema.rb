@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130828175559) do
+ActiveRecord::Schema.define(version: 20130829233226) do
 
   create_table "authentications", force: true do |t|
     t.string   "provider"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20130828175559) do
     t.string   "secret"
     t.string   "name"
     t.string   "link"
+    t.string   "image"
   end
 
   create_table "comments", force: true do |t|
