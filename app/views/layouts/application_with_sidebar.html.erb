@@ -5,7 +5,7 @@
     <%= render partial: 'layouts/navbar' %>
     <div class="container-fluid">
       <div class="row-fluid">
-      <%= render partial: 'layouts/sidebar' %>
+      <%= render partial: 'layouts/sidebar', locals: { users: @users } %>
         <div class="span10">
           <%= bootstrap_flash %>
           <%= yield %>

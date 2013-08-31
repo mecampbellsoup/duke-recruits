@@ -1,9 +1,13 @@
 DukeRecruits::Application.routes.draw do
+  get "friendships/create"
+  get "friendships/destroy"
   get "comments/create"
   root :to => "welcome#index"
 
   #devise_for :users
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
+    resources :friendships, only: [:create, :destroy, :index]
+  end
   
   resources :companies, only: [:show, :index]
   resources :events, only: [:index, :show] do

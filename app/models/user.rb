@@ -9,7 +9,21 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :authentications, dependent: :destroy
   has_many :companies, through: :events
+  has_many :friendships
+  has_many :friends, through: :friendships
   validates_presence_of :email
+
+  def potential_friends
+    # current_friend_ids = self.friendships.collect{|f| f.friend_id}  
+    # current_user_id = self.id
+    # not_in_friend_ids = [current_friend_ids, current_user_id].flatten.uniq
+    User.where("id NOT IN (?)", existing_friend_ids)
+  end
+
+  def existing_friend_ids
+    [self.friendships.collect{|f| f.friend_id}, self.id].flatten.uniq
+  end
+
 
   def self.find_for_ouath(provider, access_token, resource=nil)
     user, email, name, uid, auth_attr = nil, nil, nil, {}
