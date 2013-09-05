@@ -13,21 +13,23 @@
 </ul>
 <br/>
 
+<p id="comments_count"><%= "#{ pluralize(@comments.count, 'comment') }" %> posted for this event!</p>
+
 <%= simple_form_for [@event, @comment] do |f| %>
   <div class="well">
     <%= f.text_area :post, placeholder: "Leave a note here about the #{@event.title}" %>
-    <%= f.button :submit, class: "btn btn-success" %>
+    <%= f.button :submit, class: "btn btn-success", id: "add_comment" %>
   </div>
 <% end %>
 
-<ul class="comments">
+<div id="comments" class="nav nav-pills nav-stacked">
   <% @comments.reverse.each do |comment| %>
-    <li>
+    <div>
+      <%= image_tag avatar_url(comment.user), size: "64" %>
       <%# I think I need to pass the comment itself thru params to the comments#upvote action %>
       <%= link_to image_tag("https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/like-512.png", size: "16"), upvote_path(comment: comment.id, event: @event.id) %>
       <%= "(#{comment.upvotes} upvotes)" %> |  
       <%= "#{comment.user.name} posted on #{comment.created_at.strftime("%m-%d-%y")}: #{comment.post}" %>
-      <%#, upvote_path(comment) %>
-    </li>
+    </div>
   <% end %>
 </ul>

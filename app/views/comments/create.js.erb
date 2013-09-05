@@ -1,0 +1,4 @@
+$("#new_comment").before('<div id="flash_notice"><%= escape_javascript(flash.discard(:notice)) %></div>');
+$("#comments_count").html("<%= pluralize(@comments.count, 'Comments') %>");
+$("#comments").append("<%= @comment %>");
+$("#new_comment")[0].reset();

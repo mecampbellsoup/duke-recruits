@@ -26,3 +26,6 @@ Event.create title: "BCG + You.", location: "Fuqua School of Business, McClendon
 Event.create title: "DB - Global Intern & Full-time Recruiting Seminar", location: "Duke Lemur Center", description: "As DB continues to grow in the US, we are looking to add at least 50 Duke students to our incoming analyst class. Come learn how to join!", date: DateTime.new(2013,9,10,17), end_date: DateTime.new(2013,9,10,19.5), company_id: 3
 Event.create title: "Consulting Kickoff Mixer", location: "The Great Hall", description: "What sets McKinsey apart? Come find out.", date: DateTime.new(2013,9,1,17), end_date: DateTime.new(2013,9,1,19), company_id: 8
 Event.create title: "Accelerate with Accenture", location: "Bryan Center (Mezzanine)", description: "Why we dropped Tiger Woods, and what this means for you.", date: DateTime.new(2013,9,20,18), end_date: DateTime.new(2013,9,20,20), company_id: 9
+
+User.create name: "John Min", email: "john.c.min@gmail.com", password: "testtest", admin: false
+User.create name: "Matt Campbell", email: "mecampbell25@gmail.com", password: "testtest", admin: true
